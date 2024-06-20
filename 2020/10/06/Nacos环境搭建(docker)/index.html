@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="baidu-site-verification" content="codeva-rMUttuWgxS" />
+<meta name="google-site-verification" content="KGZ0ImKUrYvN-fLZZ_rqutiDSZIm5Q34rmYGbJcDylw" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="南江烂柯人">
+    
+    <title>
+        
+            Nacos环境搭建(docker) |
+        
+        知行
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true},"style":{"primary_color":"#66CCCC","avatar":"/images/avatar.jpg","favicon":"/images/favicon.ico","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"知者行之始,行者知之成"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                知行
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Nacos环境搭建(docker)</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">南江烂柯人</span>
+                        
+                            <span class="author-label">JAVA劝退师</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2020-10-06 09:47:12</span>
+        <span class="mobile">2020-10-06 09:47</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/docker/">docker</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/nacos/">nacos</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>959 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>5 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="创建数据挂载目录"><a href="#创建数据挂载目录" class="headerlink" title="创建数据挂载目录"></a>创建数据挂载目录</h2><pre><code>mkdir -p /home/nacos/&#123;conf,nacos-1/&#123;logs&#125;,nacos-2/&#123;logs,nginx&#125;&#125;
+</code></pre>
+<h2 id="增加公共配置custom-properties"><a href="#增加公共配置custom-properties" class="headerlink" title="增加公共配置custom.properties"></a>增加公共配置custom.properties</h2><pre><code>cd /home/nacos/conf
+vim custom.properties
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">nacos.naming.empty-service.auto-clean=true</span><br><span class="line">nacos.naming.empty-service.clean.initial-delay-ms=50000</span><br><span class="line">nacos.naming.empty-service.clean.period-time-ms=30000</span><br><span class="line"></span><br><span class="line">management.metrics.export.elastic.enabled=false</span><br><span class="line"></span><br><span class="line">management.metrics.export.influx.enabled=false</span><br><span class="line"></span><br><span class="line">server.tomcat.accesslog.enabled=true</span><br><span class="line"></span><br><span class="line">server.tomcat.accesslog.pattern=%h %l %u %t &quot;%r&quot; %s %b %D %&#123;User-Agent&#125;i</span><br><span class="line"></span><br><span class="line">server.tomcat.basedir=</span><br><span class="line"></span><br><span class="line">nacos.security.ignore.urls=/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**</span><br><span class="line"></span><br><span class="line">nacos.core.auth.system.type=nacos</span><br><span class="line"></span><br><span class="line">nacos.core.auth.enabled=false</span><br><span class="line"></span><br><span class="line">nacos.core.auth.default.token.expire.seconds=18000</span><br><span class="line"></span><br><span class="line">nacos.core.auth.default.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nacos.core.auth.caching.enabled=true</span><br><span class="line"></span><br><span class="line">nacos.istio.mcp.server.enabled=false</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写dockerc-compose-yml"><a href="#编写dockerc-compose-yml" class="headerlink" title="编写dockerc-compose.yml"></a>编写dockerc-compose.yml</h2><pre><code>cd /home/nacos
+vim docker-compose.yml
+</code></pre>
+<h2 id="单机环境"><a href="#单机环境" class="headerlink" title="单机环境"></a>单机环境</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">  nacos-server:</span><br><span class="line">    image: nacos/nacos-server:1.4.2</span><br><span class="line">    container_name: nacos-standalone</span><br><span class="line">    ports:</span><br><span class="line">      - 8848:8848</span><br><span class="line">    restart: always</span><br><span class="line">    networks:</span><br><span class="line">      - nacos_net</span><br><span class="line">    privileged: true</span><br><span class="line">    environment:</span><br><span class="line">      MODE: standalone</span><br><span class="line">      PREFER_HOST_MODE: 172.16.10.233  #如果支持主机名可以使用hostname,否则使用ip，默认也是ip</span><br><span class="line">      SPRING_DATASOURCE_PLATFORM: mysql #数据源平台 仅支持mysql或不保存empty</span><br><span class="line">      MYSQL_SERVICE_HOST: 172.16.10.233</span><br><span class="line">      MYSQL_SERVICE_PORT: 3306</span><br><span class="line">      MYSQL_SERVICE_DB_NAME: nacos</span><br><span class="line">      MYSQL_SERVICE_USER: root</span><br><span class="line">      MYSQL_SERVICE_PASSWORD: root</span><br><span class="line">      #JVM调优参数</span><br><span class="line">      JVM_XMS: 512m  #-Xms default :2g</span><br><span class="line">      JVM_MMS: 320m</span><br><span class="line">      JVM_XMX: 512m #-Xmx default :2g</span><br><span class="line">      JVM_XMN: 320m #-Xmn default :1g</span><br><span class="line">    #挂载目录</span><br><span class="line">    volumes:</span><br><span class="line">      - /home/unit/nacos/nacos-standalone/logs:/home/nacos/logs </span><br><span class="line">      - /home/unit/nacos/conf/custom.properties:/home/nacos/init.d/custom.properties </span><br><span class="line">networks:</span><br><span class="line">  nacos_net:</span><br><span class="line">    driver: bridge</span><br></pre></td></tr></table></figure>
+
+<h3 id="集群环境"><a href="#集群环境" class="headerlink" title="集群环境"></a>集群环境</h3><blockquote>
+<p>这里指定了docker内网的号段，需要提前创建好network，docker network create –driver=bridge –subnet=10.1.1.0/24 test-network</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">networks:</span><br><span class="line">  my_network:</span><br><span class="line">    external: true</span><br><span class="line">    name: test-network</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">   nacos1:</span><br><span class="line">    image: nacos/nacos-server:v2.3.1</span><br><span class="line">    container_name: nacos1</span><br><span class="line">    restart: always</span><br><span class="line">    privileged: true</span><br><span class="line">    environment:</span><br><span class="line">      MODE: cluster</span><br><span class="line">      NACOS_SERVERS: 10.1.1.40:8848,10.1.1.41:8848,10.1.1.42:8848</span><br><span class="line">      PREFER_HOST_MODE: hostname</span><br><span class="line">      SPRING_DATASOURCE_PLATFORM: mysql</span><br><span class="line">      MYSQL_SERVICE_HOST: 10.1.1.2</span><br><span class="line">      MYSQL_SERVICE_PORT: 3306</span><br><span class="line">      MYSQL_SERVICE_DB_NAME: nacos</span><br><span class="line">      MYSQL_SERVICE_USER: xc_ai</span><br><span class="line">      MYSQL_SERVICE_PASSWORD: fp!aRX33!zXS5tW</span><br><span class="line">      NACOS_AUTH_ENABLE: true # 开启鉴权</span><br><span class="line">      NACOS_AUTH_TOKEN: jqn3m9i51vr4tu5ip57zwcb3axbz1r6y6vssh7i5027xq7z5odzfaqvmjnrxenvn </span><br><span class="line">      NACOS_AUTH_IDENTITY_KEY: nacos </span><br><span class="line">      NACOS_AUTH_IDENTITY_VALUE: zwcb3axb</span><br><span class="line"> #JVM调优参数</span><br><span class="line">      JVM_XMS: 320m  #-Xms default :2g</span><br><span class="line">      JVM_MMS: 125m</span><br><span class="line">      JVM_XMX: 320m #-Xmx default :2g</span><br><span class="line">      JVM_XMN: 125m #-Xmn default :1g</span><br><span class="line">    volumes:</span><br><span class="line">      - /home/nacos/cluster1/logs:/home/nacos/logs </span><br><span class="line">      - /home/nacos/cluster1/conf/custom.properties:/home/nacos/init.d/custom.properties </span><br><span class="line">      - /home/nacos/cluster1/data:/home/nacos/data</span><br><span class="line">    networks:</span><br><span class="line">      my_network:</span><br><span class="line">        ipv4_address: 10.1.1.40</span><br><span class="line"></span><br><span class="line">   nacos2:</span><br><span class="line">    image: nacos/nacos-server:v2.3.1</span><br><span class="line">    container_name: nacos2</span><br><span class="line">    restart: always</span><br><span class="line">    privileged: true</span><br><span class="line">    environment:</span><br><span class="line">      MODE: cluster</span><br><span class="line">      NACOS_SERVERS: 10.1.1.40:8848,10.1.1.41:8848,10.1.1.42:8848</span><br><span class="line">      PREFER_HOST_MODE: hostname</span><br><span class="line">      SPRING_DATASOURCE_PLATFORM: mysql</span><br><span class="line">      MYSQL_SERVICE_HOST: 10.1.1.2</span><br><span class="line">      MYSQL_SERVICE_PORT: 3306</span><br><span class="line">      MYSQL_SERVICE_DB_NAME: nacos</span><br><span class="line">      MYSQL_SERVICE_USER: xc_ai</span><br><span class="line">      MYSQL_SERVICE_PASSWORD: fp!aRX33!zXS5tW</span><br><span class="line">      NACOS_AUTH_ENABLE: true # 开启鉴权</span><br><span class="line">      NACOS_AUTH_TOKEN: jqn3m9i51vr4tu5ip57zwcb3axbz1r6y6vssh7i5027xq7z5odzfaqvmjnrxenvn </span><br><span class="line">      NACOS_AUTH_IDENTITY_KEY: nacos </span><br><span class="line">      NACOS_AUTH_IDENTITY_VALUE: zwcb3axb</span><br><span class="line"> #JVM调优参数</span><br><span class="line">      JVM_XMS: 320m  #-Xms default :2g</span><br><span class="line">      JVM_MMS: 125m</span><br><span class="line">      JVM_XMX: 320m #-Xmx default :2g</span><br><span class="line">      JVM_XMN: 125m #-Xmn default :1g</span><br><span class="line">    volumes:</span><br><span class="line">      - /home/nacos/cluster2/logs:/home/nacos/logs </span><br><span class="line">      - /home/nacos/cluster2/conf/custom.properties:/home/nacos/init.d/custom.properties </span><br><span class="line">      - /home/nacos/cluster2/data:/home/nacos/data</span><br><span class="line">    networks:</span><br><span class="line">      my_network:</span><br><span class="line">        ipv4_address: 10.1.1.41</span><br><span class="line">        </span><br><span class="line">   nacos3:</span><br><span class="line">    image: nacos/nacos-server:v2.3.1</span><br><span class="line">    container_name: nacos3</span><br><span class="line">    restart: always</span><br><span class="line">    privileged: true</span><br><span class="line">    environment:</span><br><span class="line">      MODE: cluster</span><br><span class="line">      NACOS_SERVERS: 10.1.1.40:8848,10.1.1.41:8848,10.1.1.42:8848</span><br><span class="line">      PREFER_HOST_MODE: hostname</span><br><span class="line">      SPRING_DATASOURCE_PLATFORM: mysql</span><br><span class="line">      MYSQL_SERVICE_HOST: 10.1.1.2</span><br><span class="line">      MYSQL_SERVICE_PORT: 3306</span><br><span class="line">      MYSQL_SERVICE_DB_NAME: nacos</span><br><span class="line">      MYSQL_SERVICE_USER: xc_ai</span><br><span class="line">      MYSQL_SERVICE_PASSWORD: fp!aRX33!zXS5tW</span><br><span class="line">      NACOS_AUTH_ENABLE: true # 开启鉴权</span><br><span class="line">      NACOS_AUTH_TOKEN: jqn3m9i51vr4tu5ip57zwcb3axbz1r6y6vssh7i5027xq7z5odzfaqvmjnrxenvn </span><br><span class="line">      NACOS_AUTH_IDENTITY_KEY: nacos </span><br><span class="line">      NACOS_AUTH_IDENTITY_VALUE: zwcb3axb</span><br><span class="line"> #JVM调优参数</span><br><span class="line">      JVM_XMS: 320m  #-Xms default :2g</span><br><span class="line">      JVM_MMS: 125m</span><br><span class="line">      JVM_XMX: 320m #-Xmx default :2g</span><br><span class="line">      JVM_XMN: 125m #-Xmn default :1g</span><br><span class="line">    volumes:</span><br><span class="line">      - /home/nacos/cluster3/logs:/home/nacos/logs </span><br><span class="line">      - /home/nacos/cluster3/conf/custom.properties:/home/nacos/init.d/custom.properties </span><br><span class="line">      - /home/nacos/cluster3/data:/home/nacos/data</span><br><span class="line">    networks:</span><br><span class="line">      my_network:</span><br><span class="line">        ipv4_address: 10.1.1.42</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h3 id="编写nginx代理"><a href="#编写nginx代理" class="headerlink" title="编写nginx代理"></a>编写nginx代理</h3><blockquote>
+<p>2.0之后使用rpc访问有一个端口偏移，需要在nginx配置中指定</p>
+</blockquote>
+<h4 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h4><pre><code>cd /home/nginx/conf
+vim nginx.conf
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">user  nginx;</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">error_log  /var/log/nginx/error.log warn;</span><br><span class="line">pid        /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       /etc/nginx/mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">                      &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">                      &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">    access_log  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line"></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"># tpc服务</span><br><span class="line">stream &#123;</span><br><span class="line">    # tcp负载均衡</span><br><span class="line">    upstream nacos-grpc &#123;</span><br><span class="line">        server 10.1.1.40:9848 weight=1;</span><br><span class="line">        server 10.1.1.41:9848 weight=1;</span><br><span class="line">        server 10.1.1.42:9848 weight=1;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">                                                   </span><br><span class="line">    # Nacos服务端gRPC请求服务端端口</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 10999;</span><br><span class="line">        proxy_pass nacos-grpc;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="nacos-conf"><a href="#nacos-conf" class="headerlink" title="nacos.conf"></a>nacos.conf</h4><pre><code>cd /home/nginx/conf.d
+vim nacos.conf
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">upstream nacosserver &#123;</span><br><span class="line">            server 10.1.1.40:8848 weight=1;</span><br><span class="line">            server 10.1.1.41:8848 weight=1;</span><br><span class="line">            server 10.1.1.42:8848 weight=1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen       9999;</span><br><span class="line">      server_name localhost;</span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://nacosserver;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="执行启动命令"><a href="#执行启动命令" class="headerlink" title="执行启动命令"></a>执行启动命令</h1><pre><code>docker-compose up -d 
+</code></pre>
+<blockquote>
+<p>最后只需要用nginx进行代理转发就好了</p>
+</blockquote>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Nacos环境搭建(docker)</li>
+        <li>本文作者：南江烂柯人</li>
+        <li>创建时间：2020-10-06 09:47:12</li>
+        <li>
+            本文链接：https://www.mattjia.com/2020/10/06/Nacos环境搭建(docker)/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/nacos/">#nacos</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/10/06/IDEA%E4%BC%98%E5%8C%96/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">IDEA优化</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/10/06/PowerDesigner%E8%84%9A%E6%9C%AC/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">PowerDesigner脚本</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script 
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: 'txPhlx0kKSAJ3QLBbi4RhURO-gzGzoHsz',
+                    appKey: 'qExJLyl3FQBA9b2iYiC8buSr',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '😜吐槽一下吧~',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '南江烂柯人';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('false') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2024&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">南江烂柯人</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%8C%82%E8%BD%BD%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">创建数据挂载目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E5%85%AC%E5%85%B1%E9%85%8D%E7%BD%AEcustom-properties"><span class="nav-number">2.</span> <span class="nav-text">增加公共配置custom.properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99dockerc-compose-yml"><span class="nav-number">3.</span> <span class="nav-text">编写dockerc-compose.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%9C%BA%E7%8E%AF%E5%A2%83"><span class="nav-number">4.</span> <span class="nav-text">单机环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83"><span class="nav-number">4.1.</span> <span class="nav-text">集群环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99nginx%E4%BB%A3%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">编写nginx代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-conf"><span class="nav-number">4.2.1.</span> <span class="nav-text">nginx.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos-conf"><span class="nav-number">4.2.2.</span> <span class="nav-text">nacos.conf</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4"><span class="nav-number"></span> <span class="nav-text">执行启动命令</span></a>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
